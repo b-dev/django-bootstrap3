@@ -416,16 +416,18 @@ class FieldRenderer(BaseRenderer):
         return html
 
     def append_to_field(self, html):
-        help_text_and_errors = []
+        help_text = []
+        error_list = []
         if self.field_help:
-            help_text_and_errors.append(self.field_help)
-        help_text_and_errors += self.field_errors
-        if help_text_and_errors:
+            help_text.append(self.field_help)
+        error_list += self.field_errors
+        if help_text or error_list:
             help_html = render_template_file(
                 'bootstrap3/field_help_text_and_errors.html',
                 context={
                     'field': self.field,
-                    'help_text_and_errors': help_text_and_errors,
+                    'help_text': help_text,
+                    'error_list': error_list,
                     'layout': self.layout,
                 }
             )
